@@ -39,6 +39,15 @@ procedure(addToOutput()
         lout = getOutputName("vds_margin" obj~>baseName)
 				axlAddOutputExpr(my_adexl_session my_adexl_test_name lout ?expr exp)
 
+				rexCompile("pch")
+				if(rexExecute(obj~>cellName) then
+					axlAddSpecToOutput(my_adexl_sdb my_adexl_test_name lout ?lt "0")
+				)
+				rexCompile("nch")
+				if(rexExecute(obj~>cellName) then
+					axlAddSpecToOutput(my_adexl_sdb my_adexl_test_name lout ?gt "0")
+				)
+
 ;Add here (copy above 3 lines and modify parameter name such as vds, vdssat to the others)
 
 ;				exp = strcat("OP(\"" instName "\"\,\"vgs\")" "\-" "OP(\"" instName "\"\,\"vth\")")
@@ -53,7 +62,14 @@ procedure(addToOutput()
 				printf(strcat("adding...  " exp))
 				printf("\n")
 				axlAddOutputExpr(my_adexl_session my_adexl_test_name lout ?expr exp)
-			)
+				rexCompile("pch")
+				if(rexExecute(obj~>cellName) then
+					axlAddSpecToOutput(my_adexl_sdb my_adexl_test_name lout ?lt "0")
+				)
+				rexCompile("nch")
+				if(rexExecute(obj~>cellName) then
+					axlAddSpecToOutput(my_adexl_sdb my_adexl_test_name lout ?gt "0")
+				)			)
 		)
 	)
 )
